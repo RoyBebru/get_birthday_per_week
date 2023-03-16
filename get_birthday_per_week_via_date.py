@@ -48,8 +48,8 @@ users = [
 
 def get_birthday_per_week(users: list):
 
-    # today = date.today()
-    today = date(2023,2,28)
+    today = date.today()
+    # today = date(2023,2,28)
 
     date_shift = timedelta(0)
 
