@@ -22,7 +22,9 @@ def on(when: str):
 
 users = [
   { "name": "Bill, Jill", "birthday": on("19.03.1985")}
-, { "name": "Rica, Costa", "birthday": on("20.03.2001")}
+, { "name": "Wesly, Jone", "birthday": on("29.02.2004")}
+, { "name": "Kristi, Agata", "birthday": on("01.03.2004")}
+, { "name": "White, Barbara", "birthday": on("02.03.2001")}
 , { "name": "Aires, Buenos", "birthday": on("14.03.1991")}
 , { "name": "Frankivsk, Ivano", "birthday": on("16.03.1977")}
 , { "name": "Zaspa, Koncha", "birthday": on("13.12.2010")}
@@ -50,7 +52,7 @@ users = [
 def get_birthday_per_week(users: list):
 
     today = datetime.today()
-    # today = on("27.12.2023")
+    # today = on("28.02.2023")
 
     date_shift = timedelta(0)
 
@@ -74,7 +76,14 @@ def get_birthday_per_week(users: list):
     week_birthdays = []
     for user in users:
         bday = user["birthday"] - date_shift
-        bday = bday.replace(year=today.year)
+
+        try:
+            bday = bday.replace(year=today.year)
+        except ValueError:
+            # Maybe shifted birthday on February, 29 -> March, 1
+            bday += timedelta(days=1)
+            bday = bday.replace(year=today.year)
+
         if today <= bday < today_over_week:
             # If birthday is assigned to weekend - inform on Monday.
             # Period is not ends with weekends, so Monday exists
